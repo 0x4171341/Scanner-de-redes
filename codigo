@@ -1,0 +1,27 @@
+#!/bin/bash
+# Script(Gui) ofrece un sencilla interfaz para el comando fing
+# Este comando se encarga de inspeccionar nuestra red ofreciendo gran cantidad de información
+#desarrollado "0x4171341"
+#https://github.com/cyberthrone 
+# Esta es una herramienta gratuita y libre que pretende facilitar el acceso a los comandos vía Terminal.
+#--------------------------------------
+rm -f /tmp/codigo
+sudo fing >> /tmp/codigo &
+
+(for x in {1..100} 
+do 
+echo "#Realizando un chequeo de su red.\nBuscado dispositivos: $x%\nEspere por favor, esto p$
+echo $x 
+sleep 0.4
+done)|zenity --width "300" --title "Analizando conexion" --text "" --progress --no-cancel --auto-close 
+if [ $? -ne 1 ] ; then
+red=$(sed -e '/Presione/,/stopped/d;s/|//g;/^$/d' /tmp/codigo)
+zenity --info --title "Resultados..." --text="<b>Sesión actual iniciada con privilegios:</b> `whoami`\n<b>Resul$
+sudo killall fing.bin
+exit
+else
+sudo killall fing.bin
+exit
+fi
+
+
